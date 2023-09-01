@@ -1,0 +1,412 @@
+POST http://localhost:9301/cells/site
+
+Content-Type: application/json
+{
+    "date": "20220520",
+    "region": "01",
+    "cells": "LGS092MT1_PMKIMANPKAMLAMALANGSAMT03,LGS101ML1"
+}
+
+###
+
+POST http://localhost:9301/cells/details
+
+Content-Type: application/json
+{
+    "date": "20220520",
+    "region": "01",
+    "cells": "LGS092MT1_PMKIMANPKAMLAMALANGSAMT03,LGS101ML1"
+}
+
+###
+
+POST http://localhost:9301/sites/cells
+
+Content-Type: application/json
+{
+    "date": "20220520",
+    "region": "01",
+    "sites": "MDX226,MDX148,MDN915,MDN232"
+}
+
+###
+
+POST http://localhost:9301/sites/details
+
+Content-Type: application/json
+{
+    "date": "20220520",
+    "region": "01",
+    "sites": "MDX226,MDX148,MDN915,MDN232"
+}
+
+###
+
+POST http://localhost:9301/sites/intersects
+
+Content-Type: application/json 
+{
+    "date": "20220520", 
+    "region": "01", 
+    "areaType": "circle", 
+    "data": {
+        "lat": 3.580112249763098, 
+        "lng": 98.69898319244385, 
+        "radius": 300
+    }
+}
+
+###
+
+POST http://localhost:9301/sites/intersects
+
+Content-Type: application/json 
+{
+    "date": "20220520", 
+    "region": "01", 
+    "boundaryId": "polygon-1"
+}
+
+###
+
+POST http://localhost:9301/sites/intersects
+
+Content-Type: application/json 
+{
+  "date": "20220520",
+  "region": "01",
+  "areaType": "geojson",
+  "data": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            98.69898319244385,
+            3.580112249763098
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                98.6962366104126,
+                3.5848237129085265
+              ],
+              [
+                98.69404792785645,
+                3.580026586572354
+              ],
+              [
+                98.69563579559326,
+                3.5757862486190333
+              ],
+              [
+                98.70108604431152,
+                3.575871912206189
+              ],
+              [
+                98.70323181152344,
+                3.5841812420899286
+              ],
+              [
+                98.6962366104126,
+                3.5848237129085265
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}
+
+###
+
+POST http://localhost:9301/events/cell-tile
+
+Content-Type: application/json
+{
+    "date": "20220520",
+    "region": "01",
+    "events": "1961135612710947840,1962107426371032576,1962107426371041280"
+}
+
+###
+
+POST http://localhost:9301/events/intersects
+
+Content-Type: application/json 
+{
+    "date": "20220520", 
+    "region": "01", 
+    "areaType": "circle", 
+    "data": {
+        "lat": 3.580112249763098, 
+        "lng": 98.69898319244385, 
+        "radius": 50
+    }
+}
+
+###
+
+POST http://localhost:9301/events/intersects
+
+Content-Type: application/json 
+{
+  "date": "20220520",
+  "region": "01",
+  "areaType": "geojson",
+  "data": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            98.69898319244385,
+            3.580112249763098
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                98.6962366104126,
+                3.5848237129085265
+              ],
+              [
+                98.69404792785645,
+                3.580026586572354
+              ],
+              [
+                98.69563579559326,
+                3.5757862486190333
+              ],
+              [
+                98.70108604431152,
+                3.575871912206189
+              ],
+              [
+                98.70323181152344,
+                3.5841812420899286
+              ],
+              [
+                98.6962366104126,
+                3.5848237129085265
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}
+
+###
+
+PUT http://localhost:9301/boundaries
+
+Content-Type: application/json 
+{
+    "id": "circle-1", 
+    "areaType": "circle", 
+    "data": {
+        "lat": 3.580112249763098, 
+        "lng": 98.69898319244385, 
+        "radius": 100
+    }
+}
+
+###
+
+PUT http://localhost:9301/boundaries
+
+Content-Type: application/json 
+{
+    "id": "polygon-2",
+    "areaType": "geojson",
+    "data": {
+        "type": "FeatureCollection",
+        "features": [
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+            "type": "Point",
+            "coordinates": [
+                98.69898319244385,
+                3.580112249763098
+            ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                [
+                    98.6962366104126,
+                    3.5848237129085265
+                ],
+                [
+                    98.69404792785645,
+                    3.580026586572354
+                ],
+                [
+                    98.69563579559326,
+                    3.5757862486190333
+                ],
+                [
+                    98.70108604431152,
+                    3.575871912206189
+                ],
+                [
+                    98.70323181152344,
+                    3.5841812420899286
+                ],
+                [
+                    98.6962366104126,
+                    3.5848237129085265
+                ]
+                ]
+            ]
+            }
+        }
+        ]
+    }
+  }
+
+###
+
+POST http://localhost:9301/boundaries
+
+Content-Type: application/json 
+{
+    "id": "circle-2", 
+    "areaType": "circle", 
+    "data": {
+        "lat": 3.580112249763098, 
+        "lng": 98.69898319244385, 
+        "radius": 200
+    }
+}
+
+###
+
+DELETE http://localhost:9301/boundaries
+
+Content-Type: application/json 
+{
+    "id": "circle-2"
+}
+
+###
+
+GET http://localhost:9301/boundaries?id=polygon-1
+
+###
+
+GET http://localhost:9301/boundaries
+
+###
+
+POST http://localhost:9301/bfact
+
+Content-Type: application/json 
+{
+    "boundaryId": "polygon-1",
+    "date": "20220520",
+    "region": "01"
+}
+
+###
+
+POST http://localhost:9301/bfact
+
+Content-Type: application/json 
+{
+    "cacheId": "Plk3fddqnWoGzNEP"
+}
+
+###
+
+POST http://localhost:9301/simulation/ui/rsrp
+
+Content-Type: application/json 
+{
+    "boundaryId": "polygon-1",
+    "date": "20220520",
+    "region": "01",
+    "sites": [],
+    "tile": "tileCovmo",
+    "groupNames": ["Poor", "Fair", "Good", "Excellent"],
+    "groupLimits": [-200, -110, -102, -97, 0]
+}
+
+###
+
+POST http://localhost:9301/simulation/ui/rsrp
+
+Content-Type: application/json 
+{
+    "boundaryId": "circle-1",
+    "date": "20220520",
+    "region": "01",
+    "sites": [],
+    "tile": "tileCovmo",
+    "minCatIndex": 1,
+    "groupNames": ["Poor", "Fair", "Good", "Excellent"],
+    "groupLimits": [-200, -110, -102, -97, 0]
+}
+
+###
+
+POST http://localhost:9301/simulation/ui/kpi
+
+Content-Type: application/json 
+{
+    "boundaryId": "polygon-1",
+    "date": "20220520",
+    "region": "01",
+    "sites": [],
+    "tile": "tileCovmo",
+    "kpi": "rsrp",
+    "groupNames": ["POOR", "FAIR", "GOOD", "EXCELLENT"],
+    "groupLimits": [-200, -110, -102, -97, 0]
+}
+
+###
+
+POST http://localhost:9301/simulation/ui/kpi
+
+Content-Type: application/json 
+{
+    "boundaryId": "circle-1",
+    "date": "20220520",
+    "region": "01",
+    "sites": [],
+    "tile": "tileCovmo",
+    "minCatIndex": 1,
+    "groupNames": ["POOR", "FAIR", "GOOD", "EXCELLENT"],
+    "groupLimits": [-200, -110, -102, -97, 0]
+}
+
+###
