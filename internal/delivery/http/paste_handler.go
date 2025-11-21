@@ -20,6 +20,31 @@ func NewPasteHandler(pasteService usecase.PasteService) *PasteHandler {
 }
 
 // CreatePaste handles POST /paste
+// func (h *PasteHandler) CreatePaste(w http.ResponseWriter, r *http.Request) {
+// 	var req domain.PasteCreateRequest
+
+// 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+// 		respondError(w, http.StatusBadRequest, "Invalid request body")
+// 		return
+// 	}
+
+// 	paste, err := h.pasteService.CreatePaste(r.Context(), req)
+// 	if err != nil {
+// 		switch err {
+// 		case domain.ErrEmptyContent, domain.ErrInvalidExpiry:
+// 			respondError(w, http.StatusBadRequest, err.Error())
+// 		case domain.ErrContentTooLarge:
+// 			respondError(w, http.StatusRequestEntityTooLarge, err.Error())
+// 		default:
+// 			respondError(w, http.StatusInternalServerError, "Failed to create paste")
+// 		}
+// 		return
+// 	}
+
+//		respondJSON(w, http.StatusCreated, paste)
+//	}
+//
+// CreatePaste handles POST /paste
 func (h *PasteHandler) CreatePaste(w http.ResponseWriter, r *http.Request) {
 	var req domain.PasteCreateRequest
 
@@ -40,6 +65,10 @@ func (h *PasteHandler) CreatePaste(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	// Log the response for debugging
+	responseJSON, _ := json.Marshal(paste)
+	println("Created paste response:", string(responseJSON))
 
 	respondJSON(w, http.StatusCreated, paste)
 }

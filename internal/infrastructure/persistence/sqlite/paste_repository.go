@@ -27,7 +27,7 @@ func (r *pasteRepository) Create(ctx context.Context, paste *domain.Paste) error
 
 	var expiresAt interface{}
 	if paste.ExpiresAt != nil {
-		expiresAt = paste.ExpiresAt
+		expiresAt = paste.ExpiresAt.Format(time.RFC3339)
 	}
 
 	_, err := r.db.ExecContext(ctx, query,
@@ -35,7 +35,7 @@ func (r *pasteRepository) Create(ctx context.Context, paste *domain.Paste) error
 		paste.Content,
 		paste.IsMarkdown,
 		expiresAt,
-		paste.CreatedAt,
+		paste.CreatedAt.Format(time.RFC3339),
 	)
 	return err
 }
@@ -48,14 +48,15 @@ func (r *pasteRepository) GetByID(ctx context.Context, id string) (*domain.Paste
     `
 
 	paste := &domain.Paste{}
-	var expiresAt sql.NullTime
+	var expiresAt sql.NullString
+	var createdAt string
 
 	err := r.db.QueryRowContext(ctx, query, id).Scan(
 		&paste.ID,
 		&paste.Content,
 		&paste.IsMarkdown,
 		&expiresAt,
-		&paste.CreatedAt,
+		&createdAt,
 	)
 
 	if err == sql.ErrNoRows {
@@ -65,8 +66,16 @@ func (r *pasteRepository) GetByID(ctx context.Context, id string) (*domain.Paste
 		return nil, err
 	}
 
+	// Parse created_at
+	if parsedCreatedAt, err := time.Parse(time.RFC3339, createdAt); err == nil {
+		paste.CreatedAt = parsedCreatedAt
+	}
+
+	// Parse expires_at if exists
 	if expiresAt.Valid {
-		paste.ExpiresAt = &expiresAt.Time
+		if parsedExpiresAt, err := time.Parse(time.RFC3339, expiresAt.String); err == nil {
+			paste.ExpiresAt = &parsedExpiresAt
+		}
 	}
 
 	return paste, nil
@@ -96,7 +105,7 @@ func (r *pasteRepository) DeleteExpired(ctx context.Context) (int64, error) {
         DELETE FROM pastes
         WHERE expires_at IS NOT NULL AND expires_at < ?
     `
-	result, err := r.db.ExecContext(ctx, query, time.Now())
+	result, err := r.db.ExecContext(ctx, query, time.Now().UTC().Format(time.RFC3339))
 	if err != nil {
 		return 0, err
 	}
