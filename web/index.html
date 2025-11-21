@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TinySvc - Lightweight Utility Services</title>
+  <meta name="description" content="Self-hosted utility services including IP detection and pastebin">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="/" class="logo">
+        <span class="logo-icon">🚀</span>
+        TinySvc
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/ip.html">What's My IP</a></li>
+          <li><a href="/paste.html">Pastebin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>TinySvc</h1>
+      <p>
+        Lightweight, self-hosted utility services. Built with Clean Architecture,
+        running efficiently on minimal hardware.
+      </p>
+    </section>
+
+    <section class="services">
+      <a href="/ip.html" class="service-card fade-in">
+        <span class="service-icon">🌐</span>
+        <h3>What's My IP</h3>
+        <p>Instantly discover your public IP address with Cloudflare header support.</p>
+        <span class="service-status status-live">● Live</span>
+      </a>
+
+      <a href="/paste.html" class="service-card fade-in" style="animation-delay: 0.1s">
+        <span class="service-icon">📋</span>
+        <h3>Pastebin</h3>
+        <p>Share text snippets and code with optional markdown rendering and expiration.</p>
+        <span class="service-status status-live">● Live</span>
+      </a>
+
+      <div class="service-card fade-in" style="animation-delay: 0.2s; opacity: 0.6; cursor: default;">
+        <span class="service-icon">🔗</span>
+        <h3>URL Shortener</h3>
+        <p>Create short, memorable links for your long URLs.</p>
+        <span class="service-status status-coming">Coming Soon</span>
+      </div>
+
+      <div class="service-card fade-in" style="animation-delay: 0.3s; opacity: 0.6; cursor: default;">
+        <span class="service-icon">📝</span>
+        <h3>Note Taking</h3>
+        <p>Quick markdown notes with authentication and organization.</p>
+        <span class="service-status status-coming">Coming Soon</span>
+      </div>
+    </section>
+
+    <section class="content-box fade-in" style="animation-delay: 0.4s">
+      <h2>About TinySvc</h2>
+      <p style="color: var(--text-secondary); line-height: 1.8;">
+        TinySvc is a collection of lightweight utility services designed to run on minimal hardware.
+        Built with <strong>Go</strong> and <strong>Clean Architecture</strong> principles, 
+        it emphasizes <strong>SOLID</strong> design patterns and dependency injection through composition.
+      </p>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Architecture</div>
+          <div class="info-value">Clean</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Language</div>
+          <div class="info-value">Go</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Storage</div>
+          <div class="info-value">SQLite</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">API</div>
+          <div class="info-value">REST</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Built with ❤️ for 
+      <a href="https://github.com/aprksy/tinysvc" target="_blank">Model Playground</a> contributors
+      · <a href="https://github.com/aprksy/tinysvc" target="_blank">GitHub</a>
+    </p>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

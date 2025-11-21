@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's My IP - TinySvc</title>
+  <meta name="description" content="Check your public IP address">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="/" class="logo">
+        <span class="logo-icon">🚀</span>
+        TinySvc
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/ip.html">What's My IP</a></li>
+          <li><a href="/paste.html">Pastebin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="content-box fade-in">
+      <h2>🌐 What's My IP Address?</h2>
+      <p style="color: var(--text-secondary);">
+        Your public IP address as detected by TinySvc, with support for Cloudflare headers.
+      </p>
+
+      <div class="ip-display" id="ipDisplay">
+        <div class="ip-label">Your IP Address</div>
+        <div class="ip-address loading">Loading...</div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <button class="btn" onclick="copyIP()" id="copyBtn" disabled>
+          <span>📋</span>
+          Copy IP Address
+        </button>
+        <button class="btn btn-secondary" onclick="refreshIP()" style="margin-left: 1rem;">
+          <span>🔄</span>
+          Refresh
+        </button>
+      </div>
+
+      <div class="info-grid" id="ipInfo" style="display: none;">
+        <div class="info-item">
+          <div class="info-label">Version</div>
+          <div class="info-value" id="ipVersion">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Type</div>
+          <div class="info-value" id="ipType">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Last Checked</div>
+          <div class="info-value" id="lastChecked">-</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-box fade-in" style="animation-delay: 0.1s">
+      <h3>How It Works</h3>
+      <p style="color: var(--text-secondary); line-height: 1.8;">
+        TinySvc checks the following headers in order to determine your real IP address:
+      </p>
+      <ol style="color: var(--text-secondary); line-height: 2; margin: 1rem 0 1rem 2rem;">
+        <li><code style="background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">CF-Connecting-IP</code> - Cloudflare's real IP header</li>
+        <li><code style="background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">X-Forwarded-For</code> - Standard proxy header</li>
+        <li><code style="background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">X-Real-IP</code> - Alternative proxy header</li>
+        <li><code style="background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">RemoteAddr</code> - Direct connection fallback</li>
+      </ol>
+      <p style="color: var(--text-secondary); line-height: 1.8;">
+        This ensures accurate IP detection even when behind Cloudflare Tunnel or other proxies.
+      </p>
+    </section>
+
+    <section class="content-box fade-in" style="animation-delay: 0.2s">
+      <h3>API Usage</h3>
+      <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+        You can also access this service programmatically:
+      </p>
+      <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto;">
+        <div style="color: var(--text-muted); margin-bottom: 0.5rem;">$ curl</div>
+        <div style="color: var(--accent);">https://your-domain.com/api/v1/ip</div>
+        <div style="color: var(--text-muted); margin-top: 1rem;">Response:</div>
+        <pre style="color: var(--success); margin: 0;">{"ip": "203.0.113.42"}</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Built with ❤️ for 
+      <a href="https://github.com/aprksy/tinysvc" target="_blank">Model Playground</a> contributors
+      · <a href="https://github.com/aprksy/tinysvc" target="_blank">GitHub</a>
+    </p>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/ip.js"></script>
+</body>
+</html>
