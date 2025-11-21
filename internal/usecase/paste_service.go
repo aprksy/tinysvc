@@ -43,25 +43,25 @@ func (s *pasteService) CreatePaste(ctx context.Context, req domain.PasteCreateRe
 		ID:         generateID(),
 		Content:    req.Content,
 		IsMarkdown: req.IsMarkdown,
-		CreatedAt:  time.Now(),
+		CreatedAt:  time.Now().UTC(),
 	}
 
 	// Calculate expiry
-	expiryDays := DefaultExpiryDays
-	if req.ExpiryDays != nil {
-		if *req.ExpiryDays == 0 {
-			expiryDays = DefaultExpiryDays
-		} else if *req.ExpiryDays > 0 {
-			expiryDays = *req.ExpiryDays
-		} else {
-			// Negative means never expire
-			paste.ExpiresAt = nil
-		}
-	}
-
-	if paste.ExpiresAt == nil && expiryDays > 0 {
-		expiresAt := time.Now().AddDate(0, 0, expiryDays)
+	if req.ExpiryDays == nil {
+		// Default: 30 days
+		expiresAt := time.Now().UTC().AddDate(0, 0, DefaultExpiryDays)
 		paste.ExpiresAt = &expiresAt
+	} else if *req.ExpiryDays == 0 {
+		// Explicit 0: use default
+		expiresAt := time.Now().UTC().AddDate(0, 0, DefaultExpiryDays)
+		paste.ExpiresAt = &expiresAt
+	} else if *req.ExpiryDays > 0 {
+		// Positive: custom expiry
+		expiresAt := time.Now().UTC().AddDate(0, 0, *req.ExpiryDays)
+		paste.ExpiresAt = &expiresAt
+	} else if *req.ExpiryDays == -1 {
+		// -1: never expires
+		paste.ExpiresAt = nil
 	}
 
 	if err := s.repo.Create(ctx, paste); err != nil {
