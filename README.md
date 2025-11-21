@@ -1,4 +1,4 @@
-# TinySvc 🚀
+# tinysvc 🚀
 
 A lightweight, self-hosted utility service providing IP detection and pastebin functionality. Built with Go and Clean Architecture principles, designed to run efficiently on minimal hardware (like a Samsung N150 with 2GB RAM).
 
@@ -17,7 +17,7 @@ A lightweight, self-hosted utility service providing IP detection and pastebin f
 
 ## 🏗️ Architecture
 
-TinySvc follows **Clean Architecture** principles:
+tinysvc follows **Clean Architecture** principles:
 
 ```
 ┌─────────────────────────────────────────┐

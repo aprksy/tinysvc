@@ -3,16 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TinySvc - Lightweight Utility Services</title>
+  <title>tinysvc - Lightweight Utility Services</title>
   <meta name="description" content="Self-hosted utility services including IP detection and pastebin">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 80;
+      font-size: 60px;
+    }
+    .btn-sized {
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="header-content">
       <a href="/" class="logo">
-        <span class="logo-icon">🚀</span>
-        TinySvc
+        <span class="material-symbols-outlined" style="color:gray; font-size:36px;">lens_blur</span>
+        tinysvc
       </a>
       <nav>
         <ul>
@@ -26,7 +44,7 @@
 
   <main class="container">
     <section class="hero">
-      <h1>TinySvc</h1>
+      <h1>tinysvc</h1>
       <p>
         Lightweight, self-hosted utility services. Built with Clean Architecture,
         running efficiently on minimal hardware.
@@ -35,38 +53,70 @@
 
     <section class="services">
       <a href="/ip.html" class="service-card fade-in">
-        <span class="service-icon">🌐</span>
-        <h3>What's My IP</h3>
-        <p>Instantly discover your public IP address with Cloudflare header support.</p>
-        <span class="service-status status-live">● Live</span>
+        <div class="icon-container">
+          <span class="service-icon"><span class="material-symbols-outlined" style="color:rgb(85, 177, 172)">bring_your_own_ip</span></span>
+        </div>
+        <div class="content-container">
+          <div class="text-container">
+            <h3>What's My IP</h3>
+            <p>Instantly discover your public IP address with Cloudflare header support.</p>
+          </div>
+          <div class="status-container">
+            <span class="service-status status-live">● Live</span>
+          </div>
+        </div>
       </a>
 
       <a href="/paste.html" class="service-card fade-in" style="animation-delay: 0.1s">
-        <span class="service-icon">📋</span>
-        <h3>Pastebin</h3>
-        <p>Share text snippets and code with optional markdown rendering and expiration.</p>
-        <span class="service-status status-live">● Live</span>
+        <div class="icon-container">
+          <span class="service-icon"><span class="material-symbols-outlined" style="color:rgb(221, 98, 228)">markdown_paste</span></span>
+        </div>
+        <div class="content-container">
+          <div class="text-container">
+            <h3>Pastebin</h3>
+            <p>Share text snippets and code with optional markdown rendering and expiration.</p>
+          </div>
+          <div class="status-container">
+            <span class="service-status status-live">● Live</span>
+          </div>
+        </div>
       </a>
 
-      <div class="service-card fade-in" style="animation-delay: 0.2s; opacity: 0.6; cursor: default;">
-        <span class="service-icon">🔗</span>
-        <h3>URL Shortener</h3>
-        <p>Create short, memorable links for your long URLs.</p>
-        <span class="service-status status-coming">Coming Soon</span>
-      </div>
+      <a href="/paste.html" class="service-card fade-in" style="animation-delay: 0.2s; opacity: 0.6; cursor: default;">
+        <div class="icon-container">
+          <span class="service-icon"><span class="material-symbols-outlined">link</span></span>
+        </div>
+        <div class="content-container">
+          <div class="text-container">
+            <h3>URL Shortener</h3>
+            <p>Create short, memorable links for your long URLs.</p>
+          </div>
+          <div class="status-container">
+            <span class="service-status status-coming">Coming Soon</span>
+          </div>
+        </div>
+      </a>
 
-      <div class="service-card fade-in" style="animation-delay: 0.3s; opacity: 0.6; cursor: default;">
-        <span class="service-icon">📝</span>
-        <h3>Note Taking</h3>
-        <p>Quick markdown notes with authentication and organization.</p>
-        <span class="service-status status-coming">Coming Soon</span>
-      </div>
+      <a href="/paste.html" class="service-card fade-in" style="animation-delay: 0.3s; opacity: 0.6; cursor: default;">
+        <div class="icon-container">
+          <span class="service-icon"><span class="material-symbols-outlined">note_stack</span></span>
+        </div>
+        <div class="content-container">
+          <div class="text-container">
+            <h3>Note Taking</h3>
+            <p>Quick markdown notes with authentication and organization.</p>
+          </div>
+          <div class="status-container">
+            <span class="service-status status-coming">Coming Soon</span>
+          </div>
+        </div>
+      </a>
     </section>
 
     <section class="content-box fade-in" style="animation-delay: 0.4s">
-      <h2>About TinySvc</h2>
+      <h2>About tinysvc</h2>
       <p style="color: var(--text-secondary); line-height: 1.8;">
-        TinySvc is a collection of lightweight utility services designed to run on minimal hardware.
+        tinysvc is a collection of lightweight utility services designed to run on minimal hardware.
         Built with <strong>Go</strong> and <strong>Clean Architecture</strong> principles, 
         it emphasizes <strong>SOLID</strong> design patterns and dependency injection through composition.
       </p>
@@ -93,8 +143,9 @@
 
   <footer>
     <p>
-      Built with ❤️ for 
-      <a href="https://github.com/aprksy/tinysvc" target="_blank">Model Playground</a> contributors
+      Built with <span class="material-symbols-outlined btn-sized">favorite</span> using 
+      <a href="https://www.anthropic.com/claude/sonnet" target="_blank">Claude Sonnet 4.5</a> on 
+      <a href="https://app.outlier.ai/playground" target="_blank">Model Playground</a> for contributors
       · <a href="https://github.com/aprksy/tinysvc" target="_blank">GitHub</a>
     </p>
   </footer>

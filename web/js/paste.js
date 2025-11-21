@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     charCount.textContent = count.toLocaleString();
     
     // Warn if approaching limit
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 1024 * 1024; // 10MB
     if (count > maxSize * 0.9) {
       charCount.style.color = 'var(--error)';
     } else if (count > maxSize * 0.7) {
@@ -93,7 +93,7 @@ async function handleCreatePaste(event) {
     app.showToast(error.message || 'Failed to create paste', 'error');
   } finally {
     submitBtn.disabled = false;
-    submitBtn.innerHTML = '<span>✨</span> Create Paste';
+    submitBtn.innerHTML = '<span class="material-symbols-outlined btn-sized">add_2</span> Create Paste';
   }
 }
 
@@ -181,11 +181,12 @@ function showPasteView(paste) {
   }
   
   pasteMeta.innerHTML = `
-    <span>📅 Created: ${created}</span>
-    <span>⏰ ${expiryText}</span>
-    <span>📝 ${paste.is_markdown ? 'Markdown' : 'Plain Text'}</span>
-    <span>🆔 ID: ${paste.id || 'Unknown'}</span>
-  `;
+  <div style="display:flex; flex-direction:row; align-items:center; gap:1.5rem">
+    <div style="display:flex; flex-direction:row; align-items:center; gap:0.5rem;"><span class="material-symbols-outlined btn-sized">calendar_clock</span><span>Created: ${created}</span></div>
+    <div style="display:flex; flex-direction:row; align-items:center; gap:0.5rem;"><span class="material-symbols-outlined btn-sized">free_cancellation</span><span>${expiryText}</span></div>
+    <div style="display:flex; flex-direction:row; align-items:center; gap:0.5rem;"><span class="material-symbols-outlined btn-sized">markdown</span><span>${paste.is_markdown ? 'Markdown' : 'Plain Text'}</span></div>
+    <div style="display:flex; flex-direction:row; align-items:center; gap:0.5rem;"><span class="material-symbols-outlined btn-sized">id_card</span><span>ID: ${paste.id || 'Unknown'}</span></div>
+  </div>`;
   
   // Render content
   if (paste.is_markdown) {
@@ -210,7 +211,7 @@ function showPasteView(paste) {
   isRawView = false;
   document.getElementById('pasteContentRendered').style.display = 'block';
   document.getElementById('pasteContentRaw').style.display = 'none';
-  document.getElementById('rawToggle').innerHTML = '<span>👁️</span> Raw';
+  document.getElementById('rawToggle').innerHTML = '<span class="material-symbols-outlined btn-sized">egg_alt</span> Raw';
 }
 
 // Toggle between rendered and raw view
@@ -224,11 +225,11 @@ function toggleRawView() {
   if (isRawView) {
     renderedContent.style.display = 'none';
     rawContent.style.display = 'block';
-    rawToggle.innerHTML = '<span>🎨</span> Rendered';
+    rawToggle.innerHTML = '<span class="material-symbols-outlined btn-sized">markdown</span> Rendered';
   } else {
     renderedContent.style.display = 'block';
     rawContent.style.display = 'none';
-    rawToggle.innerHTML = '<span>👁️</span> Raw';
+    rawToggle.innerHTML = '<span class="material-symbols-outlined btn-sized">egg_alt</span> Raw';
   }
 }
 
