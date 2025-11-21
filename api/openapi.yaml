@@ -1,0 +1,237 @@
+openapi: 3.0.3
+info:
+  title: TinySvc API
+  description: |
+    A lightweight service providing utility endpoints including IP detection and pastebin functionality.
+    Built with Clean Architecture principles and designed for minimal resource usage.
+  version: 1.0.0
+  contact:
+    name: API Support
+    url: https://github.com/aprksy/tinysvc
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development server
+  - url: https://your-domain.com/api/v1
+    description: Production server
+
+tags:
+  - name: IP
+    description: IP address detection
+  - name: Paste
+    description: Pastebin operations
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns the health status of the service
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /ip:
+    get:
+      tags:
+        - IP
+      summary: Get client IP address
+      description: Returns the client's IP address, respecting Cloudflare headers
+      responses:
+        '200':
+          description: Client IP address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ip:
+                    type: string
+                    example: "203.0.113.42"
+
+  /paste:
+    post:
+      tags:
+        - Paste
+      summary: Create a new paste
+      description: Creates a new paste with optional markdown rendering and expiration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasteCreateRequest'
+            examples:
+              simple:
+                summary: Simple text paste
+                value:
+                  content: "Hello, world!"
+                  is_markdown: false
+                  expiry_days: 30
+              markdown:
+                summary: Markdown paste
+                value:
+                  content: "# Hello\n\nThis is **markdown**"
+                  is_markdown: true
+                  expiry_days: 7
+              permanent:
+                summary: Permanent paste (never expires)
+                value:
+                  content: "This paste never expires"
+                  is_markdown: false
+                  expiry_days: -1
+      responses:
+        '201':
+          description: Paste created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paste'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Content too large (>10MB)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /paste/{id}:
+    get:
+      tags:
+        - Paste
+      summary: Get a paste by ID
+      description: Retrieves a paste by its unique identifier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Paste ID
+          schema:
+            type: string
+            example: "abc12345"
+      responses:
+        '200':
+          description: Paste retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paste'
+        '404':
+          description: Paste not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Paste has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+
+    delete:
+      tags:
+        - Paste
+      summary: Delete a paste
+      description: Deletes a paste by its unique identifier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Paste ID
+          schema:
+            type: string
+            example: "abc12345"
+      responses:
+        '204':
+          description: Paste deleted successfully
+        '404':
+          description: Paste not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+
+components:
+  schemas:
+    PasteCreateRequest:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          description: The paste content (max 10MB)
+          maxLength: 10485760
+          example: "This is my paste content"
+        is_markdown:
+          type: boolean
+          description: Whether to render content as markdown
+          default: false
+          example: false
+        expiry_days:
+          type: integer
+          description: |
+            Days until expiration:
+            - null or 0: Default (30 days)
+            - Positive number: Custom expiration
+            - Negative number (-1): Never expires
+          nullable: true
+          example: 30
+
+    Paste:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique paste identifier
+          example: "abc12345"
+        content:
+          type: string
+          description: The paste content
+          example: "This is my paste content"
+        is_markdown:
+          type: boolean
+          description: Whether content should be rendered as markdown
+          example: false
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Expiration timestamp (null if never expires)
+          example: "2024-02-15T10:30:00Z"
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: "2024-01-15T10:30:00Z"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Paste not found"
