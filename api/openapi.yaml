@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: TinySvc API
+  title: tinysvc API
   description: |
     A lightweight service providing utility endpoints including IP detection and pastebin functionality.
     Built with Clean Architecture principles and designed for minimal resource usage.

@@ -3,16 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What's My IP - TinySvc</title>
+  <title>What's My IP - tinysvc</title>
   <meta name="description" content="Check your public IP address">
   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 80;
+      font-size: 60px;
+    }
+    .btn-sized {
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="header-content">
       <a href="/" class="logo">
-        <span class="logo-icon">🚀</span>
-        TinySvc
+        <span class="material-symbols-outlined" style="color:gray; font-size:36px;">lens_blur</span>
+        tinysvc
       </a>
       <nav>
         <ul>
@@ -25,10 +41,13 @@
   </header>
 
   <main class="container">
-    <section class="content-box fade-in">
-      <h2>🌐 What's My IP Address?</h2>
+    <section class="content-box fade-in" style="border-top:none;">
+      <h2 style="display:flex; flex-direction:row; align-items:center; gap: 1rem;">
+        <span class="material-symbols-outlined">bring_your_own_ip</span>
+        <span>What's My IP Address?</span>
+      </h2>
       <p style="color: var(--text-secondary);">
-        Your public IP address as detected by TinySvc, with support for Cloudflare headers.
+        Your public IP address as detected by tinysvc, with support for Cloudflare headers.
       </p>
 
       <div class="ip-display" id="ipDisplay">
@@ -38,11 +57,11 @@
 
       <div style="text-align: center; margin-top: 1rem;">
         <button class="btn" onclick="copyIP()" id="copyBtn" disabled>
-          <span>📋</span>
+          <span class="material-symbols-outlined btn-sized">content_paste</span>
           Copy IP Address
         </button>
         <button class="btn btn-secondary" onclick="refreshIP()" style="margin-left: 1rem;">
-          <span>🔄</span>
+          <span class="material-symbols-outlined btn-sized">refresh</span>
           Refresh
         </button>
       </div>
@@ -66,7 +85,7 @@
     <section class="content-box fade-in" style="animation-delay: 0.1s">
       <h3>How It Works</h3>
       <p style="color: var(--text-secondary); line-height: 1.8;">
-        TinySvc checks the following headers in order to determine your real IP address:
+        tinysvc checks the following headers in order to determine your real IP address:
       </p>
       <ol style="color: var(--text-secondary); line-height: 2; margin: 1rem 0 1rem 2rem;">
         <li><code style="background: var(--bg-tertiary); padding: 0.2rem 0.5rem; border-radius: 4px;">CF-Connecting-IP</code> - Cloudflare's real IP header</li>
@@ -86,7 +105,7 @@
       </p>
       <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto;">
         <div style="color: var(--text-muted); margin-bottom: 0.5rem;">$ curl</div>
-        <div style="color: var(--accent);">https://your-domain.com/api/v1/ip</div>
+        <div style="color: var(--accent);">https://tinysvc.aprksy.dev/api/v1/ip</div>
         <div style="color: var(--text-muted); margin-top: 1rem;">Response:</div>
         <pre style="color: var(--success); margin: 0;">{"ip": "203.0.113.42"}</pre>
       </div>
@@ -95,8 +114,9 @@
 
   <footer>
     <p>
-      Built with ❤️ for 
-      <a href="https://github.com/aprksy/tinysvc" target="_blank">Model Playground</a> contributors
+      Built with <span class="material-symbols-outlined btn-sized">favorite</span> using 
+      <a href="https://www.anthropic.com/claude/sonnet" target="_blank">Claude Sonnet 4.5</a> on 
+      <a href="https://app.outlier.ai/playground" target="_blank">Model Playground</a> for contributors
       · <a href="https://github.com/aprksy/tinysvc" target="_blank">GitHub</a>
     </p>
   </footer>

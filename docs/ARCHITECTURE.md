@@ -1,8 +1,8 @@
-# TinySvc Architecture
+# tinysvc Architecture
 
 ## Overview
 
-TinySvc is built following **Clean Architecture** principles, with a strong emphasis on **SOLID** design and **Dependency Injection through Composition**.
+tinysvc is built following **Clean Architecture** principles, with a strong emphasis on **SOLID** design and **Dependency Injection through Composition**.
 
 ## Architecture Layers
 
@@ -477,7 +477,7 @@ The architecture supports easy addition of:
 
 ## Conclusion
 
-TinySvc demonstrates how Clean Architecture and SOLID principles create a maintainable, testable, and extensible system even for small projects. The clear separation of concerns and dependency injection make it easy to:
+tinysvc demonstrates how Clean Architecture and SOLID principles create a maintainable, testable, and extensible system even for small projects. The clear separation of concerns and dependency injection make it easy to:
 
 - Test components in isolation
 - Swap implementations without breaking changes
@@ -492,9 +492,9 @@ This architecture scales from a personal utility on a 2GB laptop to a production
 ### **22. `docs/API.md`**
 
 ```markdown
-# TinySvc API Documentation
+# tinysvc API Documentation
 
-Complete API reference for TinySvc endpoints.
+Complete API reference for tinysvc endpoints.
 
 ## Base URL
 

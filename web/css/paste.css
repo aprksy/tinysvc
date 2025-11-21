@@ -6,7 +6,7 @@
 }
 
 .form-group label {
-  display: block;
+  /* display: block; */
   color: var(--text-primary);
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -54,10 +54,12 @@
 .checkbox-group {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
 }
 
 .checkbox-label {
   display: flex;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
   user-select: none;
@@ -312,18 +314,22 @@
 
 /* Markdown Guide */
 .markdown-guide {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   gap: 1rem;
   margin-top: 1.5rem;
+  background: var(--bg-tertiary);
+  padding: 1rem;
 }
 
 .guide-item {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
-  background: var(--bg-tertiary);
-  border-radius: 8px;
+  /* padding: 0.3rem; */
+  /* background: var(--bg-tertiary); */
+  /* border-radius: 8px; */
 }
 
 .guide-item code {
