@@ -8,7 +8,7 @@ A lightweight, self-hosted utility service providing IP detection and pastebin f
 - **Pastebin**: Create, retrieve, and manage text pastes
   - Markdown rendering support
   - Configurable expiration (30 days default, or never)
-  - 10MB size limit per paste
+  - 1MB size limit per paste
   - Automatic cleanup of expired pastes
 - **Rate Limiting**: Built-in protection against abuse
 - **RESTful API**: Clean, documented API with OpenAPI 3.0 spec
