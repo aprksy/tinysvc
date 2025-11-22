@@ -49,6 +49,7 @@ func (rt *Router) SetupRoutes() http.Handler {
 
 	// Serve HTML pages
 	r.Get("/", serveHTML("./web/index.html"))
+	r.Get("/favicon.ico", serveHTML("./web/favicon.ico"))
 	r.Get("/ip.html", serveHTML("./web/ip.html"))
 	r.Get("/paste.html", serveHTML("./web/paste.html"))
 
