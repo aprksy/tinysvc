@@ -25,7 +25,7 @@ func (r *PasteCreateRequest) Validate() error {
 	if len(r.Content) == 0 {
 		return ErrEmptyContent
 	}
-	if len(r.Content) > 10*1024*1024 { // 10MB
+	if len(r.Content) > 1024*1024 { // 1MB
 		return ErrContentTooLarge
 	}
 	if r.ExpiryDays != nil && *r.ExpiryDays < 0 && *r.ExpiryDays != -1 {

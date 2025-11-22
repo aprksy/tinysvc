@@ -127,7 +127,6 @@ async function loadPaste(id) {
 }
 
 // Show paste view
-// Show paste view
 function showPasteView(paste) {
   const createView = document.getElementById('createView');
   const viewView = document.getElementById('viewView');
@@ -212,6 +211,11 @@ function showPasteView(paste) {
   document.getElementById('pasteContentRendered').style.display = 'block';
   document.getElementById('pasteContentRaw').style.display = 'none';
   document.getElementById('rawToggle').innerHTML = '<span class="material-symbols-outlined btn-sized">egg_alt</span> Raw';
+  
+  // Reset QR code state
+  qrCodeInstance = null;
+  document.getElementById('qrcode').innerHTML = '';
+  closeQRModal();
 }
 
 // Toggle between rendered and raw view
@@ -340,3 +344,85 @@ window.addEventListener('popstate', () => {
     createNewPaste();
   }
 });
+
+let qrCodeInstance = null;
+let isQRVisible = false;
+
+// Show QR Code Modal
+function showQRCodeModal() {
+  if (!currentPaste) return;
+  
+  const modal = document.getElementById('qrModal');
+  modal.classList.add('show');
+  
+  // Prevent body scroll
+  document.body.style.overflow = 'hidden';
+  
+  // Generate QR code if not already generated
+  if (!qrCodeInstance) {
+    generateQRCode();
+  }
+}
+
+// Close QR Code Modal
+function closeQRModal(event) {
+  // Allow closing by clicking backdrop or close button
+  const modal = document.getElementById('qrModal');
+  modal.classList.remove('show');
+  
+  // Restore body scroll
+  document.body.style.overflow = '';
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('qrModal');
+    if (modal.classList.contains('show')) {
+      closeQRModal();
+    }
+  }
+});
+
+// Generate QR Code
+function generateQRCode() {
+  if (!currentPaste) return;
+  
+  const qrElement = document.getElementById('qrcode');
+  const qrURLElement = document.getElementById('qrCodeURL');
+  const pasteURL = `${window.location.origin}/paste.html?id=${currentPaste.id}`;
+  
+  // Clear previous QR code
+  qrElement.innerHTML = '';
+  
+  // Generate new QR code
+  qrCodeInstance = new QRCode(qrElement, pasteURL);
+  
+  // Show URL
+  qrURLElement.textContent = pasteURL;
+}
+
+// Download QR Code as PNG
+function downloadQRCode() {
+  if (!qrCodeInstance || !currentPaste) return;
+  
+  const canvas = document.querySelector('#qrcode canvas');
+  if (!canvas) {
+    app.showToast('QR code not generated yet', 'error');
+    return;
+  }
+  
+  // Convert canvas to blob and download
+  canvas.toBlob((blob) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `paste-${currentPaste.id}-qrcode.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    app.showToast('QR code downloaded!');
+  });
+}

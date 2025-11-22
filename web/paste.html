@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-522EH0NMFF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-522EH0NMFF');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pastebin - tinysvc</title>
   <meta name="description" content="Share text and code snippets with optional markdown rendering">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/paste.css">
   <!-- Markdown renderer -->
@@ -33,7 +44,7 @@
   <header>
     <div class="header-content">
       <a href="/" class="logo">
-        <span class="material-symbols-outlined" style="color:gray; font-size:36px;">lens_blur</span>
+        <span class="material-symbols-outlined" style="color:gray; font-size:36px; color:#8C1AF6">lens_blur</span>
         tinysvc
       </a>
       <nav>
@@ -151,14 +162,20 @@
       </div>
 
       <div class="paste-footer">
-        <button class="btn" onclick="createNewPaste()">
-          <span class="material-symbols-outlined btn-sized">add_2</span>
-          Create New Paste
-        </button>
-        <button class="btn btn-secondary" onclick="copyPasteURL()">
-          <span class="material-symbols-outlined btn-sized">content_copy</span>
-          Copy URL
-        </button>
+        <div class="paste-footer-actions">
+          <button class="btn" onclick="createNewPaste()">
+            <span class="material-symbols-outlined btn-sized">add_2</span>
+            Create New Paste
+          </button>
+          <button class="btn btn-secondary" onclick="copyPasteURL()">
+            <span class="material-symbols-outlined btn-sized">content_copy</span>
+            Copy URL
+          </button>
+          <button class="btn btn-secondary" onclick="showQRCodeModal()">
+            <span class="material-symbols-outlined btn-sized">qr_code</span>
+            <span id="qrToggleText">Show QR Code</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -183,6 +200,11 @@
           <span class="feature-icon"><span class="material-symbols-outlined">alarm</span></span>
           <h4>Flexible Expiration</h4>
           <p>From 1 day to never expires</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon"><span class="material-symbols-outlined">qr_code</span></span>
+          <h4>QR Code Sharing</h4>
+          <p>Generate QR codes for easy mobile access</p>
         </div>
         <div class="feature-item">
           <span class="feature-icon"><span class="material-symbols-outlined">scale</span></span>
@@ -233,6 +255,29 @@
     </section>
   </main>
 
+  <!-- QR Code Modal -->
+  <div id="qrModal" class="modal" onclick="closeQRModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3><span class="material-symbols-outlined btn-sized">mobile_camera</span> Scan to View Paste</h3>
+        <button class="modal-close" onclick="closeQRModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="qrcode" class="qr-code"></div>
+        <p class="qr-code-url" id="qrCodeURL"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="downloadQRCode()">
+          <span class="material-symbols-outlined btn-sized">save</span>
+          Download QR Code
+        </button>
+        <button class="btn" onclick="closeQRModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>
       Built with <span class="material-symbols-outlined btn-sized">favorite</span> using 
@@ -242,6 +287,8 @@
     </p>
   </footer>
 
+  <!-- QR Code Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/paste.js"></script>
 </body>
