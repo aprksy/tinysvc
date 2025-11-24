@@ -51,6 +51,19 @@ func runMigrations(db *sql.DB) error {
 
     CREATE INDEX IF NOT EXISTS idx_pastes_expires_at ON pastes(expires_at) WHERE expires_at IS NOT NULL;
     CREATE INDEX IF NOT EXISTS idx_pastes_created_at ON pastes(created_at);
+
+	CREATE TABLE IF NOT EXISTS urls (
+        id TEXT PRIMARY KEY,
+        long_url TEXT NOT NULL,
+        short_code TEXT UNIQUE NOT NULL,
+        views INTEGER NOT NULL DEFAULT 0,
+        expires_at TIMESTAMP,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_urls_short_code ON urls(short_code);
+    CREATE INDEX IF NOT EXISTS idx_urls_expires_at ON urls(expires_at) WHERE expires_at IS NOT NULL;
+    CREATE INDEX IF NOT EXISTS idx_urls_created_at ON urls(created_at);
     `
 
 	_, err := db.Exec(migration)

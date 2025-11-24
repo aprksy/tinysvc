@@ -15,6 +15,7 @@ import (
 type Router struct {
 	pasteHandler *PasteHandler
 	ipHandler    *IPHandler
+	urlHandler   *URLHandler // ADD THIS
 	rateLimiter  *middleware.RateLimiter
 }
 
@@ -22,10 +23,12 @@ type Router struct {
 func NewRouter(
 	pasteService usecase.PasteService,
 	ipService usecase.IPService,
+	urlService usecase.URLService, // ADD THIS
 ) *Router {
 	return &Router{
 		pasteHandler: NewPasteHandler(pasteService),
 		ipHandler:    NewIPHandler(ipService),
+		urlHandler:   NewURLHandler(urlService), // ADD THIS
 		rateLimiter:  middleware.NewRateLimiter(rate.Limit(10), 20),
 	}
 }
@@ -52,6 +55,10 @@ func (rt *Router) SetupRoutes() http.Handler {
 	r.Get("/favicon.ico", serveHTML("./web/favicon.ico"))
 	r.Get("/ip.html", serveHTML("./web/ip.html"))
 	r.Get("/paste.html", serveHTML("./web/paste.html"))
+	r.Get("/shorten.html", serveHTML("./web/shorten.html")) // ADD THIS
+
+	// Short URL redirect (must be before /api routes)
+	r.Get("/s/{code}", rt.urlHandler.RedirectShortURL) // ADD THIS
 
 	// Health check
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +74,11 @@ func (rt *Router) SetupRoutes() http.Handler {
 		r.Post("/paste", rt.pasteHandler.CreatePaste)
 		r.Get("/paste/{id}", rt.pasteHandler.GetPaste)
 		r.Delete("/paste/{id}", rt.pasteHandler.DeletePaste)
+
+		// URL shortener service - ADD THIS BLOCK
+		r.Post("/shorten", rt.urlHandler.CreateShortURL)
+		r.Get("/shorten/{code}", rt.urlHandler.GetShortURL)
+		r.Delete("/shorten/{id}", rt.urlHandler.DeleteShortURL)
 	})
 
 	return r

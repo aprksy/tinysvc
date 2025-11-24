@@ -38,16 +38,18 @@ func run() error {
 
 	// Initialize repositories
 	pasteRepo := sqlite.NewPasteRepository(db)
+	urlRepo := sqlite.NewURLRepository(db) // ADD THIS
 
 	// Initialize services
 	pasteService := usecase.NewPasteService(pasteRepo)
 	ipService := usecase.NewIPService()
+	urlService := usecase.NewURLService(urlRepo) // ADD THIS
 
-	// Setup cleanup job for expired pastes
-	go runCleanupJob(pasteService)
+	// Setup cleanup job for expired pastes and URLs
+	go runCleanupJob(pasteService, urlService) // UPDATE THIS
 
 	// Initialize HTTP router
-	router := httpdelivery.NewRouter(pasteService, ipService)
+	router := httpdelivery.NewRouter(pasteService, ipService, urlService) // UPDATE THIS
 	handler := router.SetupRoutes()
 
 	// Setup HTTP server
@@ -91,23 +93,30 @@ func run() error {
 	return nil
 }
 
-// runCleanupJob runs periodic cleanup of expired pastes
-func runCleanupJob(pasteService usecase.PasteService) {
+// runCleanupJob runs periodic cleanup of expired pastes and URLs
+func runCleanupJob(pasteService usecase.PasteService, urlService usecase.URLService) { // UPDATE THIS
 	ticker := time.NewTicker(1 * time.Hour)
 	defer ticker.Stop()
 
 	for range ticker.C {
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-		count, err := pasteService.CleanupExpired(ctx)
-		cancel()
 
+		// Cleanup expired pastes
+		pasteCount, err := pasteService.CleanupExpired(ctx)
 		if err != nil {
 			log.Printf("Failed to cleanup expired pastes: %v", err)
-			continue
+		} else if pasteCount > 0 {
+			log.Printf("Cleaned up %d expired pastes", pasteCount)
 		}
 
-		if count > 0 {
-			log.Printf("Cleaned up %d expired pastes", count)
+		// Cleanup expired URLs - ADD THIS
+		urlCount, err := urlService.CleanupExpired(ctx)
+		if err != nil {
+			log.Printf("Failed to cleanup expired URLs: %v", err)
+		} else if urlCount > 0 {
+			log.Printf("Cleaned up %d expired URLs", urlCount)
 		}
+
+		cancel()
 	}
 }
