@@ -249,7 +249,6 @@ async function copyPasteURL() {
   if (currentPaste) {
     const url = `${window.location.origin}/paste.html?id=${currentPaste.id}`;
     await app.copyToClipboard(url);
-    app.showToast('Paste URL copied!');
   }
 }
 

@@ -17,4 +17,9 @@ var (
 	ErrURLNotFound       = errors.New("short URL not found")
 	ErrURLExpired        = errors.New("short URL has expired")
 	ErrCustomCodeTaken   = errors.New("custom code already in use")
+
+	// JSON bin errors
+	ErrInvalidJSON  = errors.New("invalid JSON format")
+	ErrJSONNotFound = errors.New("JSON bin not found")
+	ErrJSONExpired  = errors.New("JSON bin has expired")
 )
