@@ -41,12 +41,39 @@
         <span class="material-symbols-outlined" style="color:gray; font-size:36px; color:#8C1AF6">lens_blur</span>
         tinysvc
       </a>
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        ☰
+      </button>
+      
       <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/ip.html">What's My IP</a></li>
-            <li><a href="/paste.html">Pastebin</a></li>
-            <li><a href="/shorten.html">URL Shortener</a></li>
+          <li><a href="/"><span class="material-symbols-outlined btn-sized">home</span> Home</a></li>
+          <li class="dropdown">
+            <div class="dropdown-toggle">
+              <span> Services</span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined btn-sized">keyboard_arrow_down</span>
+              </span>
+            </div>
+            <div class="dropdown-menu">
+              <a href="/ip.html">
+                <span class="material-symbols-outlined btn-sized">bring_your_own_ip</span>
+                <span>What's My IP</span>
+              </a>
+              <a href="/paste.html">
+                <span class="material-symbols-outlined btn-sized">markdown_paste</span>
+                <span>Pastebin</span>
+              </a>
+              <a href="/shorten.html">
+                <span class="material-symbols-outlined btn-sized">link</span>
+                <span>URL Shortener</span>
+              </a>
+              <a href="/json.html">
+                <span class="material-symbols-outlined btn-sized">file_json</span>
+                <span>JSON Bin</span>
+              </a>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>
@@ -134,6 +161,7 @@
   </footer>
 
   <script src="/js/app.js"></script>
+  <script src="/js/nav.js"></script>
   <script src="/js/ip.js"></script>
 </body>
 </html>

@@ -38,18 +38,20 @@ func run() error {
 
 	// Initialize repositories
 	pasteRepo := sqlite.NewPasteRepository(db)
-	urlRepo := sqlite.NewURLRepository(db) // ADD THIS
+	urlRepo := sqlite.NewURLRepository(db)
+	jsonRepo := sqlite.NewJSONRepository(db) // ADD THIS
 
 	// Initialize services
 	pasteService := usecase.NewPasteService(pasteRepo)
 	ipService := usecase.NewIPService()
-	urlService := usecase.NewURLService(urlRepo) // ADD THIS
+	urlService := usecase.NewURLService(urlRepo)
+	jsonService := usecase.NewJSONService(jsonRepo) // ADD THIS
 
-	// Setup cleanup job for expired pastes and URLs
-	go runCleanupJob(pasteService, urlService) // UPDATE THIS
+	// Setup cleanup job for expired resources
+	go runCleanupJob(pasteService, urlService, jsonService) // UPDATE THIS
 
 	// Initialize HTTP router
-	router := httpdelivery.NewRouter(pasteService, ipService, urlService) // UPDATE THIS
+	router := httpdelivery.NewRouter(pasteService, ipService, urlService, jsonService) // UPDATE THIS
 	handler := router.SetupRoutes()
 
 	// Setup HTTP server
@@ -93,8 +95,8 @@ func run() error {
 	return nil
 }
 
-// runCleanupJob runs periodic cleanup of expired pastes and URLs
-func runCleanupJob(pasteService usecase.PasteService, urlService usecase.URLService) { // UPDATE THIS
+// runCleanupJob runs periodic cleanup of expired resources
+func runCleanupJob(pasteService usecase.PasteService, urlService usecase.URLService, jsonService usecase.JSONService) { // UPDATE THIS
 	ticker := time.NewTicker(1 * time.Hour)
 	defer ticker.Stop()
 
@@ -109,12 +111,20 @@ func runCleanupJob(pasteService usecase.PasteService, urlService usecase.URLServ
 			log.Printf("Cleaned up %d expired pastes", pasteCount)
 		}
 
-		// Cleanup expired URLs - ADD THIS
+		// Cleanup expired URLs
 		urlCount, err := urlService.CleanupExpired(ctx)
 		if err != nil {
 			log.Printf("Failed to cleanup expired URLs: %v", err)
 		} else if urlCount > 0 {
 			log.Printf("Cleaned up %d expired URLs", urlCount)
+		}
+
+		// Cleanup expired JSON bins - ADD THIS
+		jsonCount, err := jsonService.CleanupExpired(ctx)
+		if err != nil {
+			log.Printf("Failed to cleanup expired JSON bins: %v", err)
+		} else if jsonCount > 0 {
+			log.Printf("Cleaned up %d expired JSON bins", jsonCount)
 		}
 
 		cancel()

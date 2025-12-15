@@ -15,7 +15,8 @@ import (
 type Router struct {
 	pasteHandler *PasteHandler
 	ipHandler    *IPHandler
-	urlHandler   *URLHandler // ADD THIS
+	urlHandler   *URLHandler
+	jsonHandler  *JSONHandler // ADD THIS
 	rateLimiter  *middleware.RateLimiter
 }
 
@@ -23,12 +24,14 @@ type Router struct {
 func NewRouter(
 	pasteService usecase.PasteService,
 	ipService usecase.IPService,
-	urlService usecase.URLService, // ADD THIS
+	urlService usecase.URLService,
+	jsonService usecase.JSONService, // ADD THIS
 ) *Router {
 	return &Router{
 		pasteHandler: NewPasteHandler(pasteService),
 		ipHandler:    NewIPHandler(ipService),
-		urlHandler:   NewURLHandler(urlService), // ADD THIS
+		urlHandler:   NewURLHandler(urlService),
+		jsonHandler:  NewJSONHandler(jsonService), // ADD THIS
 		rateLimiter:  middleware.NewRateLimiter(rate.Limit(10), 20),
 	}
 }
@@ -52,13 +55,13 @@ func (rt *Router) SetupRoutes() http.Handler {
 
 	// Serve HTML pages
 	r.Get("/", serveHTML("./web/index.html"))
-	r.Get("/favicon.ico", serveHTML("./web/favicon.ico"))
 	r.Get("/ip.html", serveHTML("./web/ip.html"))
 	r.Get("/paste.html", serveHTML("./web/paste.html"))
-	r.Get("/shorten.html", serveHTML("./web/shorten.html")) // ADD THIS
+	r.Get("/shorten.html", serveHTML("./web/shorten.html"))
+	r.Get("/json.html", serveHTML("./web/json.html")) // ADD THIS
 
-	// Short URL redirect (must be before /api routes)
-	r.Get("/s/{code}", rt.urlHandler.RedirectShortURL) // ADD THIS
+	// Short URL redirect
+	r.Get("/s/{code}", rt.urlHandler.RedirectShortURL)
 
 	// Health check
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -75,10 +78,17 @@ func (rt *Router) SetupRoutes() http.Handler {
 		r.Get("/paste/{id}", rt.pasteHandler.GetPaste)
 		r.Delete("/paste/{id}", rt.pasteHandler.DeletePaste)
 
-		// URL shortener service - ADD THIS BLOCK
+		// URL shortener service
 		r.Post("/shorten", rt.urlHandler.CreateShortURL)
 		r.Get("/shorten/{code}", rt.urlHandler.GetShortURL)
 		r.Delete("/shorten/{id}", rt.urlHandler.DeleteShortURL)
+
+		// JSON bin service - ADD THIS BLOCK
+		r.Post("/json", rt.jsonHandler.CreateJSONBin)
+		r.Get("/json/{id}", rt.jsonHandler.GetJSONBin)
+		r.Get("/json/{id}/raw", rt.jsonHandler.GetJSONBinRaw)
+		r.Put("/json/{id}", rt.jsonHandler.UpdateJSONBin)
+		r.Delete("/json/{id}", rt.jsonHandler.DeleteJSONBin)
 	})
 
 	return r
