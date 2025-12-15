@@ -379,6 +379,13 @@ footer {
   color: var(--text-muted);
 }
 
+footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 footer a {
   color: var(--accent);
   text-decoration: none;
