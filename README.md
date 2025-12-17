@@ -1,4 +1,4 @@
-# TinySvc 🚀
+# tinySvc 
 
 A lightweight, self-hosted utility service collection providing IP detection, pastebin, URL shortener, and JSON storage. Built with Go and Clean Architecture principles, designed to run efficiently on minimal hardware.
 
@@ -6,16 +6,16 @@ A lightweight, self-hosted utility service collection providing IP detection, pa
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Architecture](https://img.shields.io/badge/architecture-Clean-green.svg)](docs/ARCHITECTURE.md)
 
-## ✨ Features
+## Features
 
-### 🌐 **What's My IP**
+### **What's My IP**
 - Instant public IP detection
 - Support for Cloudflare headers (CF-Connecting-IP)
 - X-Forwarded-For and X-Real-IP support
 - IPv4 and IPv6 detection
 - Clean, responsive interface
 
-### 📋 **Pastebin**
+### **Pastebin**
 - Text and code snippet sharing
 - **Markdown rendering** with syntax highlighting
 - Configurable expiration (1 day to never)
@@ -25,7 +25,7 @@ A lightweight, self-hosted utility service collection providing IP detection, pa
 - Direct paste URLs
 - Automatic cleanup of expired pastes
 
-### 🔗 **URL Shortener**
+### **URL Shortener**
 - Create short, memorable links
 - **Custom short codes** (3-20 characters)
 - **View tracking** (click statistics)
@@ -34,7 +34,7 @@ A lightweight, self-hosted utility service collection providing IP detection, pa
 - Same expiration system as pastebin
 - Direct redirect endpoint (`/s/{code}`)
 
-### 📦 **JSON Bin**
+### **JSON Bin**
 - Store and share JSON data
 - **Real-time JSON validation**
 - Syntax highlighting
@@ -44,7 +44,7 @@ A lightweight, self-hosted utility service collection providing IP detection, pa
 - Code examples (cURL, Fetch, Axios)
 - Perfect for API testing and webhooks
 
-## 🎨 Frontend
+## Frontend
 
 - **Frameworkless** vanilla JavaScript (fast & lightweight)
 - **Responsive design** (mobile, tablet, desktop)
@@ -56,6 +56,6 @@ A lightweight, self-hosted utility service collection providing IP detection, pa
 - **Markdown rendering** (marked.js)
 - **QR code generation** (qrcode.js)
 
-## 🏗️ Architecture
+## Architecture
 
 TinySvc follows **Clean Architecture** principles with **SOLID** design:
